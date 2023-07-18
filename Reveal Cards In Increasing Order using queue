@@ -1,0 +1,19 @@
+//reveal cards in Increasing order
+class Solution {
+    public int[] deckRevealedIncreasing(int[] deck) {
+        Arrays.sort(deck);
+        int ans[]=new int[deck.length];
+        Queue <Integer> q=new LinkedList<>();
+
+        for(int i=deck.length-1;i>=0;i--){
+            if(q.size() > 0){
+                q.add(q.remove());
+            }
+            q.add(deck[i]);
+        }
+        for(int i=deck.length-1;i>=0;i--){
+            ans[i]=q.remove();
+        }
+        return ans;
+    }
+}
