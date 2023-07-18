@@ -1,4 +1,7 @@
 //reveal cards in Increasing order
+// output will give how we should place the cards so that after performing some steps it give increasing order;
+// actions are 1- take one card from front.
+//             2- place next card at last and again do step 1;
 class Solution {
     public int[] deckRevealedIncreasing(int[] deck) {
         Arrays.sort(deck);
@@ -7,7 +10,8 @@ class Solution {
 
         for(int i=deck.length-1;i>=0;i--){
             if(q.size() > 0){
-                q.add(q.remove());
+            // we normally swap the first element of queue and put it at  last;
+            q.add(q.remove());
             }
             q.add(deck[i]);
         }
