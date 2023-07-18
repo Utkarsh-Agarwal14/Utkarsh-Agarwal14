@@ -1,0 +1,55 @@
+/*
+Input: stamp = "abc", target = "ababc"
+Output: [0,2]
+Explanation: Initially s = "?????".
+- Place stamp at index 0 to get "abc??".
+- Place stamp at index 2 to get "ababc".
+[1,0,2] would also be accepted as an answer, as well as some other answers.
+*/
+
+class Solution {
+    public int[] movesToStamp(String stamp, String target) {
+        
+        int size=stamp.length();
+        int ans[];
+        
+        ArrayList<Integer> arr=new ArrayList<>();
+        char st[]=stamp.toCharArray();
+        char tr[]=target.toCharArray();
+
+        boolean tdiff=true;
+        boolean sdiff;
+        int i;
+        int j;
+        while(tdiff){
+            for(i=0,tdiff=false; i < tr.length-size+1;i++){
+                for(j=0,sdiff=false;j<size;j++){
+                if(tr[i+j]=='*'){
+                    continue;
+                }else if(tr[i+j] != st[j]){
+                    break;
+                }else{
+                    sdiff=true;
+                }
+                }
+                if(sdiff && j == size){
+                    
+                    for( j=i,tdiff=true;j<size+i;j++){
+                        tr[j]='*';
+                    }
+                    arr.add(0,i);
+                }
+        }
+        }
+        for(int k=0;k<tr.length;k++){
+            if(tr[k] != '*'){
+                return new int[0];
+            }
+        }
+        ans=new int[arr.size()];
+        for(int k=0;k<arr.size();k++){
+            ans[k]=arr.get(k);
+        }
+        return ans;
+    }
+}
