@@ -1,0 +1,39 @@
+/*
+Given an integer array nums and an integer k, return the maximum sum of a non-empty subsequence of that array such that for every two consecutive integers in the subsequence, nums[i] and nums[j], where i < j, the condition j - i <= k is satisfied.
+
+A subsequence of an array is obtained by deleting some number of elements (can be zero) from the array, leaving the remaining elements in their original order.
+
+ 
+
+Example 1:
+
+Input: nums = [10,2,-10,5,20], k = 2
+Output: 37
+Explanation: The subsequence is [10, 2, 5, 20].
+
+*/
+//code
+
+class Solution {
+    public int constrainedSubsetSum(int[] nums, int k) {
+        int max=nums[0];
+        int[] memo=new int[nums.length];
+        memo[0]=nums[0];
+        ArrayDeque<Integer> md=new ArrayDeque<>();
+        md.push(0);
+        for(int i=1;i<nums.length;i++) {
+            // if the last number index (oldest added) is previous
+            // to the window we remove it
+            if(md.getLast()<i-k) md.removeLast();
+            // The max sum with the curr numberis either with
+            // it alone or with it and the prev max sum
+            int v=nums[i], m=memo[i]=Math.max(v,memo[md.getLast()]+v);
+            // Mono deque implementation to remove smaller values
+            // than the tail (this is the magic/heart)
+            while(!md.isEmpty()&&memo[md.peek()]<=m) md.pop();
+            md.push(i);
+            if(m>max) max=m;
+        }
+        return max;
+    }
+}
