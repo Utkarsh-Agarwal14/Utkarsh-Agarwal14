@@ -1,0 +1,59 @@
+/*
+Minimum Number of K Consecutive Bit Flips
+You are given a binary array nums and an integer k.
+
+A k-bit flip is choosing a subarray of length k from nums and simultaneously changing every 0 in the subarray to 1, and every 1 in the subarray to 0.
+
+Return the minimum number of k-bit flips required so that there is no 0 in the array. If it is not possible, return -1.
+
+A subarray is a contiguous part of an array.
+
+
+example
+Input: nums = [0,0,0,1,0,1,1,0], k = 3
+Output: 3
+Explanation: 
+Flip nums[0],nums[1],nums[2]: nums becomes [1,1,1,1,0,1,1,0]
+Flip nums[4],nums[5],nums[6]: nums becomes [1,1,1,1,1,0,0,0]
+Flip nums[5],nums[6],nums[7]: nums becomes [1,1,1,1,1,1,1,1]
+*/
+//code
+
+class Solution {
+    public int minKBitFlips(int[] nums, int k) {
+        
+        int ans=0;
+        Queue<Integer> q=new LinkedList<>();
+        boolean flip=false;
+
+        for(int i=0;i<nums.length-k+1;i++){
+            if(!q.isEmpty() && q.peek() == i){
+                flip=!flip;
+                q.remove();
+            }
+            if(flip){
+                nums[i] = 1 - nums[i]; 
+            }
+            if(nums[i] == 0){
+                flip=!flip;
+                q.add(i+k);
+                ans++;
+            }
+        }
+        for(int i=nums.length-k+1;i<nums.length;i++){
+            if(!q.isEmpty() && q.peek() == i){
+                flip=!flip;
+                q.remove();
+            }
+            if(flip){
+                nums[i] = 1 - nums[i]; 
+            }
+            if(nums[i] == 0){
+                return -1;
+            }
+        }
+
+        return ans;
+
+    }
+}
