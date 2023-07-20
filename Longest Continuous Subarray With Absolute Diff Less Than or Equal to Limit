@@ -1,0 +1,32 @@
+/*
+Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit
+
+Given an array of integers nums and an integer limit, return the size of the longest non-empty subarray such that the absolute difference between any two elements of this subarray is less than or equal to limit.
+nput: nums = [10,1,2,4,7,2], limit = 5
+Output: 4 
+Explanation: The subarray [2,4,7,2] is the longest since the maximum absolute diff is |2-7| = 5 <= 5.
+
+*/
+//code
+
+
+class Solution {
+    public int longestSubarray(int[] nums, int limit) {
+        
+    TreeSet<Integer> set=new TreeSet<>((a,b)->nums[a]==nums[b] ? a-b : nums[a]-nums[b]);
+    int ans=1;
+    int left=0;
+    int right=1;
+    set.add(0);
+    for(right=1;right<nums.length;right++){
+        set.add(right);
+        while(nums[set.last()]-nums[set.first()] > limit){
+            set.remove(left);
+            left++;
+        }
+        ans=Math.max(ans,right-left+1);
+    }
+    return ans;
+
+    }
+}
