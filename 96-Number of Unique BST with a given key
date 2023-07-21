@@ -1,0 +1,37 @@
+/*
+Given an integer n, return the number of structurally unique BST's (binary search trees) which has exactly n nodes of unique values from 1 to n.
+
+Approach
+The solution is based on Dynamic Programming. For all possible values of i, consider i as root, then [1 . . . i-1] numbers will fall in the left subtree and [i+1 . . . N] numbers will fall in the right subtree. 
+
+The count of all possible BST’s will be count(N) = summation of (count(i-1)*count(N-i)) where i lies in the range [1, N].
+
+Input: N = 3 
+Output: 5
+Explanation: For N = 3, preorder traversal of Unique BSTs are:
+1 2 3
+1 3 2
+2 1 3
+3 1 2
+3 2 1
+
+Input: N = 4 
+Output: 14
+*/
+//code
+class GFG {
+    public static int dp[] = new int[20];
+    static int numberOfBST(int n)
+    {
+        // Base case
+        if (n <= 1)
+            return 1;
+        // In case if the value is already present in the
+        // array just return it and no need to calculate it
+        if (dp[n] > 0)
+            return dp[n];
+        for (int i = 1; i <= n; i++)
+            dp[n]
+                += numberOfBST(i - 1) * numberOfBST(n - i);
+        return dp[n];
+    }
