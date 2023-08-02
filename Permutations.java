@@ -14,7 +14,7 @@ class Solution {
     }                                                
     private void recurPermute(int index,int[] nums,List<List<Integer>>ans) {                                                
         if (index == nums.length){                                                 
-            Lis<Integer>ds = new ArrayList<>();                                                 
+            List<Integer>ds = new ArrayList<>();                                                 
             for (int i = 0; i < nums.length; i++) {   
                 ds.add(nums[i]);                                                
             }                                
